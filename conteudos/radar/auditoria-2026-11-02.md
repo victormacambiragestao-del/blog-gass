@@ -18,7 +18,13 @@ Metas do briefing: 95 ou mais, LCP abaixo de 2,5 s e CLS abaixo de 0,1. Desempen
 - O teste rodou em `http://localhost`, sem HTTPS. Na Cloudflare, o site terá HTTPS.
 - O antivírus Kaspersky do computador injeta um script nas páginas (`gc.kis.v2.scr.kaspersky-labs.com`). Isso acontece só nesta máquina.
 
-Repetir o teste no endereço publicado para confirmar.
+**Confirmado no endereço publicado com HTTPS** (`blog-gass.victormacambira-gestao.workers.dev`), ainda sem artigos liberados:
+
+| Página | Desempenho | Acessibilidade | Boas práticas | SEO | LCP | CLS |
+|---|---|---|---|---|---|---|
+| /blog | 98 | 100 | 100 | 100 | 1,3 s | 0,017 |
+| /diagnostico | 99 | 100 | 100 | 100 | 1,2 s | 0,04 |
+| /sobre | 100 | 100 | 100 | 100 | 1,0 s | 0 |
 
 **Não medido:** INP. Ele depende de interação real de visitantes e aparece no Search Console depois de algumas semanas no ar. O bloqueio total foi de 0 ms em todas as páginas, um bom sinal.
 
