@@ -1,23 +1,26 @@
-// Publicação na Cloudflare. O blog responde só pelos caminhos abaixo; o resto do domínio continua no Lovable.
-// As rotas só funcionam depois que o DNS do domínio estiver na Cloudflare.
+// Publicação na Cloudflare.
+// Fase 1 (atual): teste no endereço provisório *.workers.dev, sem mexer no domínio.
+// Fase 2: depois que o DNS de victormacambira.com.br estiver na Cloudflare, descomente as rotas abaixo.
+// O blog responde só por esses caminhos; o resto do domínio continua no Lovable.
 {
   "name": "blog-gass",
   "compatibility_date": "2026-10-01",
+  "workers_dev": true,
   "assets": {
     "directory": "./dist",
     "html_handling": "drop-trailing-slash",
     "not_found_handling": "404-page"
-  },
-  "routes": [
-    { "pattern": "victormacambira.com.br/blog*", "zone_name": "victormacambira.com.br" },
-    { "pattern": "victormacambira.com.br/sobre", "zone_name": "victormacambira.com.br" },
-    { "pattern": "victormacambira.com.br/autor/*", "zone_name": "victormacambira.com.br" },
-    { "pattern": "victormacambira.com.br/diagnostico", "zone_name": "victormacambira.com.br" },
-    { "pattern": "victormacambira.com.br/privacidade", "zone_name": "victormacambira.com.br" },
-    { "pattern": "victormacambira.com.br/robots.txt", "zone_name": "victormacambira.com.br" },
-    { "pattern": "victormacambira.com.br/sitemap.xml", "zone_name": "victormacambira.com.br" },
-    { "pattern": "victormacambira.com.br/llms.txt", "zone_name": "victormacambira.com.br" },
-    { "pattern": "victormacambira.com.br/llms-full.txt", "zone_name": "victormacambira.com.br" },
-    { "pattern": "victormacambira.com.br/b66aac31aad7498e8f40462e9b60fc58.txt", "zone_name": "victormacambira.com.br" }
-  ]
+  }
+  // "routes": [
+  //   { "pattern": "victormacambira.com.br/blog*", "zone_name": "victormacambira.com.br" },
+  //   { "pattern": "victormacambira.com.br/sobre", "zone_name": "victormacambira.com.br" },
+  //   { "pattern": "victormacambira.com.br/autor/*", "zone_name": "victormacambira.com.br" },
+  //   { "pattern": "victormacambira.com.br/diagnostico", "zone_name": "victormacambira.com.br" },
+  //   { "pattern": "victormacambira.com.br/privacidade", "zone_name": "victormacambira.com.br" },
+  //   { "pattern": "victormacambira.com.br/robots.txt", "zone_name": "victormacambira.com.br" },
+  //   { "pattern": "victormacambira.com.br/sitemap.xml", "zone_name": "victormacambira.com.br" },
+  //   { "pattern": "victormacambira.com.br/llms.txt", "zone_name": "victormacambira.com.br" },
+  //   { "pattern": "victormacambira.com.br/llms-full.txt", "zone_name": "victormacambira.com.br" },
+  //   { "pattern": "victormacambira.com.br/b66aac31aad7498e8f40462e9b60fc58.txt", "zone_name": "victormacambira.com.br" }
+  // ]
 }
