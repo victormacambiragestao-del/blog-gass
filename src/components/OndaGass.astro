@@ -1,0 +1,20 @@
+---
+// As duas curvas do "ss" do logo da GASS, ampliadas. É o único elemento decorativo grande do blog.
+interface Props {
+  class?: string;
+}
+
+const { class: classe } = Astro.props;
+const curva = 'M70 10 C 150 90, -10 170, 70 250 S 150 410, 70 490 S -10 650, 70 730';
+---
+
+<svg class={classe} viewBox="0 0 330 740" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="onda-gradiente" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f06666"></stop>
+      <stop offset="1" stop-color="#ff9f7f"></stop>
+    </linearGradient>
+  </defs>
+  <path d={curva} stroke="url(#onda-gradiente)" stroke-width="44"></path>
+  <path d={curva} transform="translate(140 0)" stroke="url(#onda-gradiente)" stroke-width="44"></path>
+</svg>

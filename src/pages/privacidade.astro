@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import { GASS, linkWhatsApp } from '../data/site';
+
+const contato = linkWhatsApp('Olá! Tenho uma solicitação sobre os meus dados pessoais.');
+---
+
+<Base
+  titulo="Política de Privacidade | GASS"
+  descricao="Saiba quais dados a GASS coleta neste site, para que usa e como exercer os seus direitos previstos na LGPD."
+>
+  <div class="mx-auto max-w-3xl px-4 pt-10 sm:px-8">
+    <h1 class="titulo text-5xl leading-tight sm:text-6xl">Política de Privacidade</h1>
+    <p class="mt-4 text-[0.9375rem]">Última atualização: 31 de outubro de 2026.</p>
+    <div class="prosa mt-8">
+      <p>
+        Esta política explica como a {GASS.nome}, localizada na {GASS.endereco.rua}, {GASS.endereco.bairro},
+        {GASS.endereco.cidade} ({GASS.endereco.estado}), trata os dados pessoais coletados neste site, de acordo com a
+        Lei Geral de Proteção de Dados (Lei 13.709/2018).
+      </p>
+
+      <h2>Quais dados coletamos?</h2>
+      <ul>
+        <li><strong>Diagnóstico de Gestão:</strong> nome, empresa, WhatsApp, segmento, faixa de faturamento e principal desafio.</li>
+        <li><strong>Materiais e newsletter:</strong> e-mail e o material escolhido.</li>
+        <li><strong>Navegação:</strong> páginas visitadas e cliques em botões, de forma agregada, para medir o desempenho do site.</li>
+      </ul>
+
+      <h2>Para que usamos esses dados?</h2>
+      <ul>
+        <li>Responder ao seu pedido de diagnóstico e falar com você sobre ele.</li>
+        <li>Enviar os materiais e os artigos que você pediu.</li>
+        <li>Entender quais conteúdos são mais úteis e melhorar o site.</li>
+      </ul>
+      <p>Usamos os dados de contato com base no seu consentimento, que você pode retirar a qualquer momento.</p>
+
+      <h2>Com quem compartilhamos?</h2>
+      <p>
+        Não vendemos seus dados. Eles passam apenas pelos serviços necessários para o site funcionar: hospedagem
+        (Cloudflare), banco de dados (Supabase), WhatsApp, quando você decide enviar a mensagem, e ferramentas de envio
+        de e-mail e de medição de audiência. Alguns desses fornecedores podem armazenar dados fora do Brasil.
+      </p>
+
+      <h2>Por quanto tempo guardamos?</h2>
+      <p>
+        Guardamos os dados enquanto forem necessários para as finalidades acima ou até você pedir a exclusão, salvo
+        quando a lei exigir que sejam mantidos.
+      </p>
+
+      <h2>Quais são os seus direitos?</h2>
+      <p>
+        Você pode pedir a confirmação do tratamento, o acesso, a correção, a exclusão dos seus dados e a retirada do
+        consentimento. Para isso, <a href={contato}>fale conosco pelo WhatsApp</a>.
+      </p>
+    </div>
+  </div>
+</Base>

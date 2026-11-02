@@ -1,0 +1,22 @@
+---
+interface Props {
+  href: string;
+  titulo: string;
+  texto?: string;
+  tamanho?: 'grande' | 'pequeno';
+}
+
+const { href, titulo, texto, tamanho = 'grande' } = Astro.props;
+---
+
+<a href={href} class="cartao-botao">
+  <span class="min-w-0">
+    <span class:list={['titulo block leading-snug', tamanho === 'grande' ? 'text-2xl' : 'text-xl']}>{titulo}</span>
+    {texto && <span class="mt-2 block text-[0.9375rem] leading-normal">{texto}</span>}
+  </span>
+  <span class="cartao-seta" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </span>
+</a>

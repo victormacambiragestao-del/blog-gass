@@ -1,0 +1,77 @@
+---
+import Base from '../../layouts/Base.astro';
+import Trilha from '../../components/Trilha.astro';
+
+const trilha = [{ nome: 'Blog', href: '/blog' }, { nome: 'Buscar' }];
+---
+
+<Base titulo="Buscar no blog | GASS" descricao="Encontre artigos de gestão para pequenas e médias empresas." semIndice>
+  <div class="mx-auto max-w-3xl px-4 pt-6 sm:px-8">
+    <Trilha itens={trilha} />
+    <h1 class="titulo mt-8 text-5xl leading-tight">Buscar no blog</h1>
+    <form id="busca" action="/blog/busca" method="get" class="mt-8 flex flex-col gap-3 sm:flex-row">
+      <label for="q" class="sr-only">O que você quer encontrar?</label>
+      <input
+        id="q"
+        name="q"
+        type="search"
+        placeholder="Exemplo: CMV"
+        class="flex-1 rounded-full border border-apoio bg-fundo px-5 py-2.5 text-tinta"
+      />
+      <button type="submit" class="botao cursor-pointer">Buscar</button>
+    </form>
+    <p id="busca-status" class="mt-6" aria-live="polite"></p>
+    <ul id="busca-resultados" class="mt-4 grid gap-4"></ul>
+  </div>
+</Base>
+
+<script>
+  interface ItemDoIndice {
+    url: string;
+    titulo: string;
+    resumo: string;
+    texto: string;
+  }
+
+  const normalizar = (texto: string) =>
+    texto
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .toLowerCase();
+
+  const campo = document.getElementById('q') as HTMLInputElement;
+  const status = document.getElementById('busca-status') as HTMLElement;
+  const lista = document.getElementById('busca-resultados') as HTMLElement;
+  const termo = new URLSearchParams(location.search).get('q')?.trim() ?? '';
+
+  if (termo) {
+    campo.value = termo;
+    const resposta = await fetch('/blog/busca-indice.json');
+    const indice: ItemDoIndice[] = await resposta.json();
+    const palavras = normalizar(termo).split(/\s+/);
+    const achados = indice.filter((item) => {
+      const conteudo = normalizar(`${item.titulo} ${item.resumo} ${item.texto}`);
+      return palavras.every((palavra) => conteudo.includes(palavra));
+    });
+
+    status.textContent = achados.length
+      ? `${achados.length} ${achados.length === 1 ? 'artigo encontrado' : 'artigos encontrados'}.`
+      : 'Nenhum artigo encontrado. Tente uma palavra mais simples, como CMV ou DRE.';
+
+    for (const item of achados) {
+      const li = document.createElement('li');
+      const link = document.createElement('a');
+      const titulo = document.createElement('span');
+      const resumo = document.createElement('span');
+      link.href = item.url;
+      link.className = 'cartao-botao flex-col';
+      titulo.className = 'titulo block text-2xl leading-snug';
+      titulo.textContent = item.titulo;
+      resumo.className = 'block text-[0.9375rem] leading-normal';
+      resumo.textContent = item.resumo;
+      link.append(titulo, resumo);
+      li.append(link);
+      lista.append(li);
+    }
+  }
+</script>

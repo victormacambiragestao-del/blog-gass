@@ -1,0 +1,142 @@
+---
+import Base from '../layouts/Base.astro';
+import { FAIXAS_DE_FATURAMENTO, SEGMENTOS, TEMAS, linkWhatsApp } from '../data/site';
+
+const desafios = TEMAS.filter((tema) => tema.id !== 'noticias');
+const classeCampo = 'mt-1.5 w-full rounded-lg border border-apoio bg-fundo px-3 py-2.5 text-tinta';
+const classeRotulo = 'block text-[0.9375rem] leading-snug text-tinta';
+---
+
+<Base
+  titulo="Diagnóstico de Gestão gratuito | GASS"
+  descricao="Responda a poucas perguntas sobre a sua empresa e fale com um assessor da GASS sobre o que está travando a gestão. É gratuito."
+  semWhatsApp
+>
+  <div class="mx-auto grid max-w-7xl gap-12 px-4 pt-10 sm:px-8 lg:grid-cols-[1fr_32rem]">
+    <div>
+      <h1 class="titulo text-5xl leading-[1.08] sm:text-7xl">Diagnóstico de Gestão gratuito</h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed sm:text-xl">
+        Conte o que está travando a sua empresa. Um assessor da GASS conversa com você pelo WhatsApp e indica por onde
+        começar.
+      </p>
+      <ol class="mt-8 max-w-xl space-y-4">
+        <li><strong class="font-bold text-tinta">Responda às perguntas.</strong> Leva poucos minutos.</li>
+        <li><strong class="font-bold text-tinta">Envie pelo WhatsApp.</strong> Sua mensagem já vai pronta.</li>
+        <li><strong class="font-bold text-tinta">Converse com um assessor.</strong> Sem custo e sem compromisso.</li>
+      </ol>
+    </div>
+
+    <div class="superficie p-6 sm:p-8">
+      <form id="diagnostico" class="grid gap-4">
+        <div>
+          <label for="nome" class={classeRotulo}>Seu nome</label>
+          <input id="nome" name="nome" required maxlength="120" autocomplete="name" class={classeCampo} />
+        </div>
+        <div>
+          <label for="empresa" class={classeRotulo}>Nome da empresa</label>
+          <input id="empresa" name="empresa" required maxlength="120" autocomplete="organization" class={classeCampo} />
+        </div>
+        <div>
+          <label for="whatsapp" class={classeRotulo}>Seu WhatsApp com DDD</label>
+          <input id="whatsapp" name="whatsapp" type="tel" required maxlength="30" autocomplete="tel" class={classeCampo} />
+        </div>
+        <div>
+          <label for="segmento" class={classeRotulo}>Segmento</label>
+          <select id="segmento" name="segmento" required class={classeCampo}>
+            <option value="">Escolha uma opção</option>
+            {SEGMENTOS.map((item) => <option>{item}</option>)}
+          </select>
+        </div>
+        <div>
+          <label for="faturamento" class={classeRotulo}>Faturamento</label>
+          <select id="faturamento" name="faturamento" required class={classeCampo}>
+            <option value="">Escolha uma opção</option>
+            {FAIXAS_DE_FATURAMENTO.map((item) => <option>{item}</option>)}
+          </select>
+        </div>
+        <div>
+          <label for="desafio" class={classeRotulo}>O que mais trava a empresa hoje?</label>
+          <select id="desafio" name="desafio" required class={classeCampo}>
+            <option value="">Escolha uma opção</option>
+            {desafios.map((item) => <option>{item.nome}</option>)}
+          </select>
+        </div>
+        <input type="text" name="site" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+        <label class="flex items-start gap-2 text-sm leading-snug">
+          <input type="checkbox" name="consentimento" required class="mt-0.5 size-4 shrink-0" />
+          <span>
+            Autorizo a GASS a usar estes dados para falar comigo sobre o diagnóstico. Li a <a
+              href="/privacidade"
+              class="link">Política de Privacidade</a
+            >.
+          </span>
+        </label>
+        <button type="submit" class="botao cursor-pointer justify-self-start">Continuar</button>
+      </form>
+
+      <div id="diagnostico-pronto" class="hidden" role="status">
+        <p class="titulo text-3xl leading-tight">Falta só enviar pelo WhatsApp</p>
+        <p class="mt-3">Sua mensagem está pronta. Toque no botão e envie para começar a conversa.</p>
+        <a id="diagnostico-whatsapp" href={linkWhatsApp('Olá! Quero fazer o Diagnóstico de Gestão.')} class="botao mt-5">
+          Enviar pelo WhatsApp
+        </a>
+      </div>
+
+      <noscript>
+        <p class="mt-4 text-[0.9375rem]">
+          Se o formulário não funcionar, <a href={linkWhatsApp('Olá! Quero fazer o Diagnóstico de Gestão.')} class="link">
+            fale conosco pelo WhatsApp
+          </a>.
+        </p>
+      </noscript>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import { SITE } from '../data/site';
+  import { registrarEvento } from '../lib/eventos';
+  import { salvarLead } from '../lib/leads';
+
+  const form = document.getElementById('diagnostico') as HTMLFormElement;
+  const pronto = document.getElementById('diagnostico-pronto') as HTMLElement;
+  const whatsapp = document.getElementById('diagnostico-whatsapp') as HTMLAnchorElement;
+
+  form.addEventListener('submit', async (evento) => {
+    evento.preventDefault();
+    const dados = new FormData(form);
+    const campo = (nome: string) => String(dados.get(nome) ?? '').trim();
+    const botao = form.querySelector('button');
+    if (botao) botao.disabled = true;
+
+    // O campo "site" fica escondido: só robôs o preenchem.
+    if (!campo('site')) {
+      // Mesmo se o cadastro falhar, a pessoa segue para o WhatsApp e o contato não se perde.
+      await salvarLead({
+        tipo: 'diagnostico',
+        nome: campo('nome'),
+        empresa: campo('empresa'),
+        whatsapp: campo('whatsapp'),
+        segmento: campo('segmento'),
+        faturamento: campo('faturamento'),
+        desafio: campo('desafio'),
+        origem: new URLSearchParams(location.search).get('origem') ?? document.referrer.slice(0, 200),
+        consentimento: dados.get('consentimento') === 'on',
+      });
+    }
+
+    const mensagem = [
+      'Olá! Quero fazer o Diagnóstico de Gestão.',
+      `Nome: ${campo('nome')}`,
+      `Empresa: ${campo('empresa')}`,
+      `Segmento: ${campo('segmento')}`,
+      `Faturamento: ${campo('faturamento')}`,
+      `Maior trava: ${campo('desafio')}`,
+    ].join('\n');
+    whatsapp.href = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(mensagem)}`;
+
+    form.classList.add('hidden');
+    pronto.classList.remove('hidden');
+    registrarEvento('diagnostico_enviado', { desafio: campo('desafio'), faturamento: campo('faturamento') });
+  });
+</script>

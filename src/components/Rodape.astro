@@ -1,0 +1,43 @@
+---
+import { GASS, TEMAS } from '../data/site';
+import { listarArtigos } from '../lib/artigos';
+
+const artigos = await listarArtigos();
+const temas = TEMAS.filter((tema) => artigos.some((artigo) => artigo.data.tema === tema.id));
+---
+
+<footer class="mt-24 border-t border-linha">
+  <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 text-[0.9375rem] sm:px-8 md:grid-cols-[1fr_2fr]">
+    <div>
+      <p class="titulo text-xl">{GASS.nome}</p>
+      <p class="mt-2">{GASS.endereco.rua}, {GASS.endereco.bairro}, {GASS.endereco.cidade} ({GASS.endereco.estado})</p>
+    </div>
+    <div class="grid gap-8 sm:grid-cols-2">
+      <nav aria-label="Institucional">
+        <ul class="space-y-2">
+          <li><a href="/sobre" class="hover:text-coral-texto">Sobre a GASS</a></li>
+          <li><a href="/autor/victor-macambira" class="hover:text-coral-texto">Victor Macambira</a></li>
+          <li><a href="/blog/busca" class="hover:text-coral-texto">Buscar no blog</a></li>
+          <li><a href="/diagnostico" class="hover:text-coral-texto">Diagnóstico de Gestão</a></li>
+          <li><a href="/blog/rss.xml" class="hover:text-coral-texto">Assinar por RSS</a></li>
+          <li><a href="/privacidade" class="hover:text-coral-texto">Política de Privacidade</a></li>
+        </ul>
+      </nav>
+      {
+        temas.length > 0 && (
+          <nav aria-label="Temas do blog">
+            <ul class="space-y-2">
+              {temas.map((tema) => (
+                <li>
+                  <a href={`/blog/tema/${tema.id}`} class="hover:text-coral-texto">
+                    {tema.nome}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )
+      }
+    </div>
+  </div>
+</footer>

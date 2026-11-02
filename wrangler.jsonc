@@ -1,0 +1,23 @@
+// Publicação na Cloudflare. O blog responde só pelos caminhos abaixo; o resto do domínio continua no Lovable.
+// As rotas só funcionam depois que o DNS do domínio estiver na Cloudflare.
+{
+  "name": "blog-gass",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "victormacambira.com.br/blog*", "zone_name": "victormacambira.com.br" },
+    { "pattern": "victormacambira.com.br/sobre", "zone_name": "victormacambira.com.br" },
+    { "pattern": "victormacambira.com.br/autor/*", "zone_name": "victormacambira.com.br" },
+    { "pattern": "victormacambira.com.br/diagnostico", "zone_name": "victormacambira.com.br" },
+    { "pattern": "victormacambira.com.br/privacidade", "zone_name": "victormacambira.com.br" },
+    { "pattern": "victormacambira.com.br/robots.txt", "zone_name": "victormacambira.com.br" },
+    { "pattern": "victormacambira.com.br/sitemap.xml", "zone_name": "victormacambira.com.br" },
+    { "pattern": "victormacambira.com.br/llms.txt", "zone_name": "victormacambira.com.br" },
+    { "pattern": "victormacambira.com.br/llms-full.txt", "zone_name": "victormacambira.com.br" },
+    { "pattern": "victormacambira.com.br/b66aac31aad7498e8f40462e9b60fc58.txt", "zone_name": "victormacambira.com.br" }
+  ]
+}

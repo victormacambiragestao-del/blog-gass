@@ -1,0 +1,27 @@
+---
+import { linkWhatsApp } from '../../data/site';
+
+interface Props {
+  texto: string;
+  mensagem: string;
+}
+
+const { texto, mensagem } = Astro.props;
+const origem = Astro.url.pathname.replace(/\.html$/, '');
+---
+
+<aside class="my-10 rounded-[14px] bg-noite px-6 py-8 shadow-[var(--sombra-alta)] sm:px-8">
+  <p class="font-titulo text-2xl leading-snug" style="color: #f6f0f0">{texto}</p>
+  <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+    <a
+      href={`/diagnostico?origem=${encodeURIComponent(origem)}`}
+      class="inline-block rounded-full bg-coral px-5 py-2.5 text-[0.9375rem] hover:bg-papel"
+      style="color: #161616; text-decoration: none"
+    >
+      Fazer diagnóstico gratuito
+    </a>
+    <a href={linkWhatsApp(mensagem)} class="text-[0.9375rem] underline underline-offset-4" style="color: #f6f0f0">
+      Falar pelo WhatsApp
+    </a>
+  </div>
+</aside>

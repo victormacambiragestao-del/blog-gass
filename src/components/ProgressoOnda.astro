@@ -1,0 +1,42 @@
+---
+const segmentos = Array.from({ length: 40 }, (_, i) => `T ${(i + 2) * 40} 7`).join(' ');
+const caminho = `M0 7 Q 20 1 40 7 ${segmentos}`;
+---
+
+<div class="pointer-events-none fixed inset-x-0 top-0 z-40 h-3.5" aria-hidden="true">
+  <svg class="block h-full w-full" viewBox="0 0 1640 14" preserveAspectRatio="none" fill="none">
+    <path
+      id="progresso-onda"
+      d={caminho}
+      pathLength="100"
+      stroke="#f06666"
+      stroke-width="3"
+      stroke-dasharray="100"
+      stroke-dashoffset="100"
+      vector-effect="non-scaling-stroke"></path>
+  </svg>
+</div>
+
+<script>
+  const onda = document.getElementById('progresso-onda');
+  let agendado = false;
+
+  function atualizar() {
+    agendado = false;
+    const raiz = document.documentElement;
+    const total = raiz.scrollHeight - raiz.clientHeight;
+    const lido = total > 0 ? Math.min(raiz.scrollTop / total, 1) : 0;
+    onda?.setAttribute('stroke-dashoffset', String(100 - lido * 100));
+  }
+
+  addEventListener(
+    'scroll',
+    () => {
+      if (agendado) return;
+      agendado = true;
+      requestAnimationFrame(atualizar);
+    },
+    { passive: true },
+  );
+  atualizar();
+</script>

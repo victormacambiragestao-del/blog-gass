@@ -1,0 +1,26 @@
+---
+interface Props {
+  itens: { nome: string; href?: string }[];
+}
+
+const { itens } = Astro.props;
+---
+
+<nav aria-label="Trilha de navegação" class="text-sm">
+  <ol class="flex flex-wrap gap-x-2">
+    {
+      itens.map((item, indice) => (
+        <li class="flex gap-x-2">
+          {indice > 0 && <span aria-hidden="true">/</span>}
+          {item.href ? (
+            <a href={item.href} class="hover:text-coral-texto">
+              {item.nome}
+            </a>
+          ) : (
+            <span aria-current="page">{item.nome}</span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

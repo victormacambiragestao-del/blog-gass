@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import CartaoBotao from '../components/CartaoBotao.astro';
+---
+
+<Base titulo="Página não encontrada | GASS" descricao="Esta página não existe. Busque um artigo ou volte ao blog." semIndice>
+  <div class="mx-auto max-w-3xl px-4 pt-14 sm:px-8">
+    <h1 class="titulo text-5xl leading-tight sm:text-6xl">Esta página não existe</h1>
+    <p class="mt-5 text-lg">O endereço pode ter mudado. Escolha por onde continuar:</p>
+    <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+      <li><CartaoBotao href="/blog" titulo="Ir para o blog" tamanho="pequeno" /></li>
+      <li><CartaoBotao href="/blog/busca" titulo="Buscar um artigo" tamanho="pequeno" /></li>
+    </ul>
+  </div>
+</Base>

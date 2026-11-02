@@ -1,0 +1,292 @@
+@import 'tailwindcss';
+@import '@fontsource/lora/400.css';
+@import '@fontsource/poppins/300.css';
+@import '@fontsource/poppins/400.css';
+@import '@fontsource/poppins/700.css';
+
+@custom-variant dark (&:where([data-tema='escuro'], [data-tema='escuro'] *));
+
+:root {
+  --fundo: #f6f0f0;
+  --fundo-alt: #eee6e6;
+  --tinta: #161616;
+  --texto: #5a5555;
+  --apoio: #5a5555;
+  --linha: #c9c3c3;
+  --coral: #f06666;
+  /* Coral mais escuro para texto pequeno sobre fundo claro (contraste AA). */
+  --coral-texto: #bf3a3a;
+  --pessego: #ff9f7f;
+  /* Profundidade: fundo, superfície e superfície em destaque. */
+  --superficie: #fffbfb;
+  --borda-suave: rgb(22 22 22 / 0.07);
+  --sombra: 0 1px 2px rgb(22 22 22 / 0.05), 0 10px 24px -14px rgb(120 60 60 / 0.28);
+  --sombra-alta: 0 2px 4px rgb(22 22 22 / 0.06), 0 20px 36px -16px rgb(170 60 60 / 0.38);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema='claro']) {
+    --fundo: #161616;
+    --fundo-alt: #211f1f;
+    --tinta: #f6f0f0;
+    --texto: #d8d2d2;
+    --apoio: #a39d9d;
+    --linha: #3d3939;
+    --coral-texto: #f06666;
+    --superficie: #232121;
+    --borda-suave: rgb(255 255 255 / 0.08);
+    --sombra: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 12px 24px -14px rgb(0 0 0 / 0.8);
+    --sombra-alta: inset 0 1px 0 rgb(255 255 255 / 0.07), 0 22px 36px -16px rgb(0 0 0 / 0.9);
+    color-scheme: dark;
+  }
+}
+
+:root[data-tema='escuro'] {
+  --fundo: #161616;
+  --fundo-alt: #211f1f;
+  --tinta: #f6f0f0;
+  --texto: #d8d2d2;
+  --apoio: #a39d9d;
+  --linha: #3d3939;
+  --coral-texto: #f06666;
+  --superficie: #232121;
+  --borda-suave: rgb(255 255 255 / 0.08);
+  --sombra: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 12px 24px -14px rgb(0 0 0 / 0.8);
+  --sombra-alta: inset 0 1px 0 rgb(255 255 255 / 0.07), 0 22px 36px -16px rgb(0 0 0 / 0.9);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-fundo: var(--fundo);
+  --color-fundo-alt: var(--fundo-alt);
+  --color-tinta: var(--tinta);
+  --color-texto: var(--texto);
+  --color-apoio: var(--apoio);
+  --color-linha: var(--linha);
+  --color-coral: var(--coral);
+  --color-coral-texto: var(--coral-texto);
+  --color-noite: #161616;
+  --color-papel: #f6f0f0;
+  --font-titulo: 'Lora', Georgia, serif;
+  --font-texto: 'Poppins', system-ui, sans-serif;
+}
+
+body {
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--font-texto);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 3px solid var(--coral-texto);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+.titulo {
+  font-family: var(--font-titulo);
+  font-weight: 400;
+  color: var(--tinta);
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.rotulo {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--coral-texto);
+}
+
+.link {
+  color: var(--coral-texto);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+.botao {
+  display: inline-block;
+  padding: 0.7rem 1.25rem;
+  border-radius: 999px;
+  background: var(--tinta);
+  color: var(--fundo);
+  font-weight: 400;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: background-color 0.15s;
+}
+
+.botao:hover {
+  background: var(--coral-texto);
+  color: var(--fundo);
+}
+
+.botao:active {
+  transform: translateY(1px);
+}
+
+.superficie {
+  background: var(--superficie);
+  border: 1px solid var(--borda-suave);
+  border-radius: 14px;
+  box-shadow: var(--sombra);
+}
+
+.cartao-botao {
+  display: flex;
+  height: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: var(--superficie);
+  border: 1px solid var(--borda-suave);
+  border-radius: 14px;
+  box-shadow: var(--sombra);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.cartao-botao:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-alta);
+}
+
+.cartao-botao:active {
+  transform: translateY(1px);
+  box-shadow: var(--sombra);
+}
+
+.cartao-seta {
+  display: grid;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--fundo);
+  color: var(--tinta);
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+.cartao-botao:hover .cartao-seta {
+  background: var(--coral-texto);
+  color: var(--fundo);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cartao-botao,
+  .cartao-botao:hover,
+  .cartao-botao:active {
+    transform: none;
+    transition: none;
+  }
+}
+
+.prosa {
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+@media (min-width: 48rem) {
+  .prosa {
+    font-size: 1.1875rem;
+  }
+}
+
+.prosa > * + * {
+  margin-top: 1.4em;
+}
+
+.prosa h2 {
+  font-family: var(--font-titulo);
+  font-weight: 400;
+  color: var(--tinta);
+  font-size: 1.875rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-top: 2.4em;
+  text-wrap: balance;
+}
+
+.prosa h3 {
+  font-family: var(--font-titulo);
+  font-weight: 400;
+  color: var(--tinta);
+  font-size: 1.375rem;
+  line-height: 1.3;
+  margin-top: 1.8em;
+}
+
+.prosa strong {
+  font-weight: 700;
+  color: var(--tinta);
+}
+
+.prosa a {
+  color: var(--coral-texto);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+.prosa > ul {
+  list-style: disc;
+  padding-left: 1.25em;
+}
+
+.prosa > ol {
+  list-style: decimal;
+  padding-left: 1.25em;
+}
+
+.prosa li + li {
+  margin-top: 0.5em;
+}
+
+.prosa blockquote {
+  border-left: 3px solid var(--coral);
+  padding-left: 1.25rem;
+  color: var(--tinta);
+}
+
+.prosa table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.prosa th {
+  text-align: left;
+  font-weight: 700;
+  color: var(--tinta);
+  border-bottom: 2px solid var(--tinta);
+  padding: 0.6rem 1rem 0.6rem 0;
+}
+
+.prosa td {
+  border-bottom: 1px solid var(--linha);
+  padding: 0.7rem 1rem 0.7rem 0;
+  vertical-align: top;
+}

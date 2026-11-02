@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import CartaoBotao from '../../components/CartaoBotao.astro';
+import fotoPalco from '../../assets/victor-palco.jpg';
+import { listarArtigos } from '../../lib/artigos';
+import { AUTOR, PERFIS } from '../../data/site';
+
+const artigos = await listarArtigos();
+---
+
+<Base
+  titulo="Victor Macambira, cofundador da GASS"
+  descricao="Victor Macambira é empresário há mais de 13 anos, cofundador da GASS e assessor sênior de gestão de pequenas e médias empresas."
+  imagem="/blog/victor-macambira.jpg"
+>
+  <div class="mx-auto grid max-w-7xl gap-10 px-4 pt-10 sm:px-8 md:grid-cols-[3fr_2fr]">
+    <div>
+      <h1 class="titulo text-5xl leading-[1.08] sm:text-7xl">{AUTOR.nome}</h1>
+      <p class="mt-4 text-xl text-tinta">{AUTOR.cargo}</p>
+      <div class="prosa mt-8">
+        <p>
+          Sou Victor Macambira, empresário há mais de 13 anos. Minha jornada passa pelos ramos imobiliário, food service,
+          varejo e serviços.
+        </p>
+        <p>
+          Antes de assessorar outros donos, fui empresário e cliente da GASS. Hoje sou assessor sênior de gestão e
+          cofundador da GASS, ao lado do meu sócio Pablo Monteiro.
+        </p>
+        <p>Também falo sobre gestão em eventos como o iFood Move.</p>
+      </div>
+      {
+        PERFIS.victor.length > 0 && (
+          <ul class="mt-6 flex flex-wrap gap-4">
+            {PERFIS.victor.map((perfil) => (
+              <li>
+                <a href={perfil} rel="me" class="link">
+                  {new URL(perfil).hostname.replace('www.', '')}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+    <Image
+      src={fotoPalco}
+      alt="Victor Macambira falando ao microfone no palco do iFood Move"
+      widths={[480, 800, 1100]}
+      sizes="(min-width: 768px) 40vw, 100vw"
+      class="superficie aspect-[4/5] w-full object-cover object-[50%_20%]"
+    />
+  </div>
+
+  {
+    artigos.length > 0 && (
+      <section class="mx-auto mt-20 max-w-7xl px-4 sm:px-8" aria-labelledby="artigos-do-autor">
+        <h2 id="artigos-do-autor" class="titulo text-3xl sm:text-4xl">
+          Artigos do Victor
+        </h2>
+        <ul class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {artigos.map((artigo) => (
+            <li>
+              <CartaoBotao href={`/blog/${artigo.id}`} titulo={artigo.data.titulo} texto={artigo.data.resumo} tamanho="pequeno" />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</Base>

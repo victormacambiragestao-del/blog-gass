@@ -1,0 +1,26 @@
+<div class="checklist">
+  <slot />
+</div>
+
+<style is:global>
+  .checklist ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .checklist li {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .checklist li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.4em;
+    width: 1.1rem;
+    height: 1.1rem;
+    border: 2px solid var(--coral-texto);
+    border-radius: 3px;
+  }
+</style>

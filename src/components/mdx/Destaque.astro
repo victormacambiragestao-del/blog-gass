@@ -1,0 +1,13 @@
+---
+interface Props {
+  titulo?: string;
+  tipo?: 'dica' | 'alerta';
+}
+
+const { titulo, tipo = 'dica' } = Astro.props;
+---
+
+<aside class:list={['border-l-[3px] py-1 pl-5', tipo === 'alerta' ? 'border-coral-texto' : 'border-coral']}>
+  {titulo && <p class="font-bold text-tinta">{titulo}</p>}
+  <div class="mt-1 [&>*+*]:mt-3"><slot /></div>
+</aside>

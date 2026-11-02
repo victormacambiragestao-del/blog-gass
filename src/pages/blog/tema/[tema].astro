@@ -1,0 +1,46 @@
+---
+import Base from '../../../layouts/Base.astro';
+import CartaoBotao from '../../../components/CartaoBotao.astro';
+import Trilha from '../../../components/Trilha.astro';
+import { listarArtigos, type Artigo } from '../../../lib/artigos';
+import { schemaDaTrilha } from '../../../lib/schema';
+import { TEMAS } from '../../../data/site';
+
+export async function getStaticPaths() {
+  const artigos = await listarArtigos();
+  return TEMAS.map((tema) => ({
+    params: { tema: tema.id },
+    props: { tema, artigos: artigos.filter((artigo) => artigo.data.tema === tema.id) },
+  })).filter(({ props }) => props.artigos.length > 0);
+}
+
+interface Props {
+  tema: (typeof TEMAS)[number];
+  artigos: Artigo[];
+}
+
+const { tema, artigos } = Astro.props;
+const trilha = [{ nome: 'Blog', href: '/blog' }, { nome: tema.nome }];
+---
+
+<Base
+  titulo={`${tema.nome}: artigos para donos | GASS`}
+  descricao={`${tema.pergunta} Artigos práticos de ${tema.nome.toLowerCase()} para donos de pequenas e médias empresas.`}
+  semIndice={artigos.length < 3}
+  schema={[schemaDaTrilha(trilha)]}
+>
+  <div class="mx-auto max-w-7xl px-4 pt-6 sm:px-8">
+    <Trilha itens={trilha} />
+    <h1 class="titulo mt-8 text-5xl leading-tight sm:text-6xl">{tema.nome}</h1>
+    <p class="mt-4 text-xl">{tema.pergunta}</p>
+    <ul class="mt-10 grid gap-4 md:grid-cols-2">
+      {
+        artigos.map((artigo) => (
+          <li>
+            <CartaoBotao href={`/blog/${artigo.id}`} titulo={artigo.data.titulo} texto={artigo.data.resumo} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Base>

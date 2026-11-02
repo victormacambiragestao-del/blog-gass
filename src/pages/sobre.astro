@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import CartaoBotao from '../components/CartaoBotao.astro';
+import fotoPalco from '../assets/victor-palco.jpg';
+import { GASS, NUMEROS, OFERTAS, linkWhatsApp } from '../data/site';
+---
+
+<Base
+  titulo="Sobre a GASS Assessoria de Gestão"
+  descricao="Conheça a GASS, assessoria de gestão para pequenas e médias empresas, com mais de 1.500 empresas atendidas em 4 países."
+>
+  <div class="mx-auto max-w-7xl px-4 pt-10 sm:px-8">
+    <h1 class="titulo max-w-4xl text-5xl leading-[1.08] sm:text-7xl">Gestão para quem toca a empresa de verdade</h1>
+    <div class="prosa mt-8 max-w-3xl">
+      <p>
+        A GASS Assessoria de Gestão ajuda donos de pequenas e médias empresas a organizar números, equipe e rotina. A
+        marca foi criada em 2019, a partir de uma experiência em gestão de mais de 16 anos, e tem como sócios e
+        cofundadores {GASS.fundadores[0]} e {GASS.fundadores[1]}.
+      </p>
+      <p>
+        A GASS se posiciona como a maior referência em gestão de pequenas e médias empresas do Brasil. O escritório fica
+        em {GASS.endereco.cidade}, na {GASS.endereco.bairro}, e as empresas atendidas estão no Brasil, em Portugal, nos
+        EUA e em Angola.
+      </p>
+    </div>
+  </div>
+
+  <section class="mt-16 bg-noite text-papel" aria-labelledby="numeros">
+    <div class="mx-auto grid max-w-7xl md:grid-cols-[3fr_2fr]">
+      <div class="px-4 py-14 sm:px-8 lg:py-20">
+        <h2 id="numeros" class="font-titulo text-3xl leading-tight text-papel sm:text-4xl">A GASS em números</h2>
+        <dl class="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
+          {
+            NUMEROS.map((numero) => (
+              <div class="flex flex-col-reverse">
+                <dt class="mt-1 text-[0.9375rem] leading-snug text-[#d8d2d2]">{numero.rotulo}</dt>
+                <dd class="font-titulo text-5xl text-coral">{numero.valor}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <p class="mt-10 max-w-xl text-[0.9375rem] text-[#d8d2d2]">
+          O aumento considera as pequenas e médias empresas atendidas pela GASS e a margem operacional, antes de
+          dividendos, investimentos e passivos parcelados. Ele combina maior ticket médio, maior faturamento e redução
+          de custos.
+        </p>
+      </div>
+      <Image
+        src={fotoPalco}
+        alt="Victor Macambira, cofundador da GASS, no palco do iFood Move"
+        widths={[480, 800, 1100]}
+        sizes="(min-width: 768px) 40vw, 100vw"
+        class="h-80 w-full object-cover object-[50%_20%] md:h-full"
+      />
+    </div>
+  </section>
+
+  <section class="mx-auto mt-20 max-w-7xl px-4 sm:px-8" aria-labelledby="como-ajudamos">
+    <h2 id="como-ajudamos" class="titulo text-3xl sm:text-4xl">Como a GASS pode ajudar a sua empresa</h2>
+    <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        OFERTAS.map((oferta) => (
+          <li>
+            <CartaoBotao href={linkWhatsApp(oferta.mensagem)} titulo={oferta.nome} texto={oferta.texto} tamanho="pequeno" />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>

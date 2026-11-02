@@ -1,0 +1,29 @@
+<div class="passos">
+  <slot />
+</div>
+
+<style is:global>
+  .passos ol {
+    list-style: none;
+    counter-reset: passo;
+    padding: 0;
+  }
+
+  .passos li {
+    counter-increment: passo;
+    position: relative;
+    margin-top: 1.25rem;
+    padding-left: 3rem;
+  }
+
+  .passos li::before {
+    content: counter(passo);
+    position: absolute;
+    left: 0;
+    top: -0.15em;
+    font-family: var(--font-titulo);
+    font-size: 2rem;
+    line-height: 1.2;
+    color: var(--coral-texto);
+  }
+</style>

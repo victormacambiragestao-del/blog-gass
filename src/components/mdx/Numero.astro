@@ -1,0 +1,13 @@
+---
+interface Props {
+  valor: string;
+  rotulo: string;
+}
+
+const { valor, rotulo } = Astro.props;
+---
+
+<div class="my-8">
+  <p class="titulo text-6xl leading-none sm:text-7xl">{valor}</p>
+  <p class="mt-3 max-w-md text-base leading-normal">{rotulo}</p>
+</div>

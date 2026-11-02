@@ -1,0 +1,88 @@
+---
+import { MATERIAIS, type MaterialId } from '../data/site';
+import { leadsAtivos } from '../lib/leads';
+
+interface Props {
+  material: MaterialId;
+}
+
+const { material } = Astro.props;
+const dados = MATERIAIS[material];
+const link = `/blog/materiais/${dados.arquivo}`;
+---
+
+<section class="superficie my-12 p-6 sm:p-8" aria-label={dados.nome} data-material={material} data-newsletter>
+  <p class="titulo text-2xl leading-snug">{dados.chamada}</p>
+  <p class="mt-2 text-[0.9375rem] leading-normal">{dados.texto}</p>
+  {
+    leadsAtivos ? (
+      <form class="mt-5">
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <label class="sr-only" for={`email-${material}`}>
+            Seu e-mail
+          </label>
+          <input
+            id={`email-${material}`}
+            name="email"
+            type="email"
+            required
+            autocomplete="email"
+            maxlength="160"
+            placeholder="seu@email.com.br"
+            class="min-w-0 flex-1 rounded-full border border-apoio bg-fundo px-5 py-2.5 text-tinta"
+          />
+          <button type="submit" class="botao cursor-pointer">
+            Receber o material
+          </button>
+        </div>
+        <input type="text" name="site" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+        <label class="mt-3 flex items-start gap-2 text-sm leading-snug">
+          <input type="checkbox" name="consentimento" required class="mt-0.5 size-4 shrink-0" />
+          <span>
+            Quero receber este material e os artigos da GASS por e-mail. Li a <a href="/privacidade" class="link">
+              Política de Privacidade
+            </a>.
+          </span>
+        </label>
+        <p class="mt-3 hidden text-[0.9375rem] font-bold text-tinta" role="status" data-resultado>
+          Pronto! <a href={link} download class="link">Baixe o material aqui</a>.
+        </p>
+        <p class="mt-3 hidden text-[0.9375rem] text-coral-texto" role="alert" data-erro>
+          Não conseguimos salvar seu cadastro, mas o material é seu: <a href={link} download class="link">baixe aqui</a>.
+        </p>
+      </form>
+    ) : (
+      <a href={link} download class="botao mt-5">
+        Baixar o material
+      </a>
+    )
+  }
+</section>
+
+<script>
+  import { registrarEvento } from '../lib/eventos';
+  import { salvarLead } from '../lib/leads';
+
+  document.querySelectorAll<HTMLElement>('[data-newsletter]').forEach((bloco) => {
+    const form = bloco.querySelector('form');
+    form?.addEventListener('submit', async (evento) => {
+      evento.preventDefault();
+      const dados = new FormData(form);
+      const botao = form.querySelector('button');
+      if (botao) botao.disabled = true;
+      const material = bloco.dataset.material ?? '';
+      // O campo "site" fica escondido: só robôs o preenchem.
+      const salvo = dados.get('site')
+        ? true
+        : await salvarLead({
+            tipo: 'newsletter',
+            email: String(dados.get('email')),
+            material,
+            origem: location.pathname,
+            consentimento: dados.get('consentimento') === 'on',
+          });
+      form.querySelector<HTMLElement>(salvo ? '[data-resultado]' : '[data-erro]')?.classList.remove('hidden');
+      if (salvo) registrarEvento('newsletter_cadastro', { material });
+    });
+  });
+</script>
