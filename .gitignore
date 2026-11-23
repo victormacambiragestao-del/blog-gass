@@ -13,3 +13,6 @@ conteudos/transcricoes/*/*
 
 # Preferências locais do Claude Code
 .claude/settings.local.json
+
+# Modelo de transcrição baixado localmente
+.cache/

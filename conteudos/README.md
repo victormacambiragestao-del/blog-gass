@@ -1,11 +1,16 @@
 # Máquina de conteúdos
 
-## Como usar uma transcrição
+## Como transformar um material em conteúdo
 
-1. Coloque o arquivo em `transcricoes/entrada/`, em texto (`.txt`, `.md`, `.srt` ou `.vtt`).
-2. Digite `/decompor` no Claude Code.
+1. Coloque o arquivo em `transcricoes/entrada/`. Formatos aceitos:
+   - **Texto:** `.txt`, `.md`, `.srt`, `.vtt`
+   - **Documentos:** PowerPoint (`.pptx`), PDF, Word (`.docx`), `.odp`, `.odt`, Excel (`.xlsx`)
+   - **Áudio e vídeo:** `.mp3`, `.m4a`, `.wav`, `.ogg`, `.opus` (áudio do WhatsApp), `.aac`, `.flac`, `.mp4`, `.mov`, `.mkv`, `.webm`
+2. Digite `/decompor` no Claude Code. Ele converte e transcreve tudo antes de começar.
 3. Escolha no mapa o que quer produzir.
-4. Revise os rascunhos no painel e aprove.
+4. Revise os rascunhos e aprove.
+
+A transcrição de áudio é feita no seu computador, sem enviar o arquivo para nenhum serviço. Na primeira vez, o modelo é baixado e isso leva alguns minutos. Arquivos de PowerPoint antigos (`.ppt`) e PDFs escaneados ainda não são lidos: salve o `.ppt` como `.pptx` antes de colocar na pasta.
 
 ## Pastas
 

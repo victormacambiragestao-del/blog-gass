@@ -69,7 +69,7 @@ Dados oficiais em `materiais/dados-da-marca.md`. Use só o que está lá e, se h
 
 - `src/content/blog/`: artigos. Sempre começam com `rascunho: true`.
 - `conteudos/plano/`: pautas, calendário e perguntas para testar nas IAs.
-- `conteudos/transcricoes/`: transcrições recebidas. Não vão para o GitHub.
+- `conteudos/transcricoes/`: transcrições, áudios, vídeos, PPTs, PDFs e documentos recebidos. Não vão para o GitHub. `npm run preparar` converte tudo em texto.
 - `conteudos/biblioteca/`: ideias extraídas das transcrições.
 - `conteudos/mapas/`, `conteudos/pautas-quentes/`, `conteudos/pesquisas/`, `conteudos/radar/`: relatórios dos comandos.
 - `src/data/site.ts`: temas, números e materiais.

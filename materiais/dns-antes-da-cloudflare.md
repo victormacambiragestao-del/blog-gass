@@ -17,6 +17,9 @@ Lidos em 02/11/2026, com os servidores de nome da Hostinger (`ns1.dns-parking.co
 | ftp.victormacambira.com.br | A | 185.213.81.170 | FTP da Hostinger |
 | autoconfig.victormacambira.com.br | CNAME | autoconfig.mail.hostinger.com | E-mail (configuração automática) |
 | _lovable.victormacambira.com.br | TXT | lovable_verify=4df5d99b4fe1789ca59a0fe07b39c334a9b3a102ad605ba0e1995dfd956c8ded | Verificação do domínio no Lovable |
+| _lovable.www.victormacambira.com.br | TXT | lovable_verify=0a6284d41d1084eda1ad89024f1190e92e44c6f740985a7f1aa72bef74538572 | Verificação do www no Lovable |
+
+O domínio é registrado fora da Hostinger (provavelmente no Registro.br). A Hostinger só hospeda o DNS. Os servidores de nome são trocados no registrador.
 
 Não há registro `AAAA` no domínio principal nem no `www`, como o Lovable exige.
 
